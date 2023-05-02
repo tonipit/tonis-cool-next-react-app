@@ -1,18 +1,12 @@
-// 'use client';
+import { ReactElement } from 'react';
+import CatOfSamuli from './components/cat/cat-of-samuli';
+import SearchParams from './components/cat/cat-search-params';
+import Navbar from './components/nav/navbar';
+import Layout from './layout';
+import { NextPageWithLayout } from './_app';
 
-import Image from 'next/image';
-import { Inter } from 'next/font/google';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { createRoot } from 'react-dom/client';
-import App from 'next/app';
-
-const inter = Inter({ subsets: ['latin'] });
-
-export default function Homeee() {
-    // const container: HTMLElement | null = document.getElementById('home-root');
-    // const root = createRoot(container!);
-    // root.render(<App />)
+const Page: NextPageWithLayout = () => {
+    return <div>Hello, all</div>;
 
     // return (
     //   <main className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -132,16 +126,25 @@ export default function Homeee() {
     //   </main>
     // )
 
-    return React.createElement('home-root', { id: 'lol-id' }, [
-        React.createElement(CatOfSamuli, { name: 'Jorma' }),
-        React.createElement(CatOfSamuli, { name: 'Seppo' }),
-    ]);
-}
+    // return (
+    //     <>
+    //         <Navbar></Navbar>
+    //         <main>
+    //             {/* <h1>Search for beautiful cat breed locations</h1>
+    //         <SearchParams></SearchParams>
+    //         <div id="root-div"></div> */}
+    //         </main>
+    //     </>
+    // );
 
-export function CatOfSamuli(catQualities: any) {
-    return React.createElement('cat-of-samuli', {}, [
-        React.createElement('b', {}, catQualities.name),
-        React.createElement('div', {}, 'Siamemese'),
-        React.createElement('div', {}, 'Brown'),
-    ]);
-}
+    // return React.createElement('home-root', { id: 'lol-id' }, [
+    //     React.createElement(CatOfSamuli, { name: 'Jorma', key: 'jorma-the-cat' }),
+    //     React.createElement(CatOfSamuli, { name: 'Seppo', key: 'seppo-the-cat' }),
+    // ]);
+};
+
+Page.getLayout = function getLayout(page: ReactElement) {
+    return <Layout>{/* <p>lollllllllllllllllllllllll</p> */}</Layout>;
+};
+
+export default Page;
