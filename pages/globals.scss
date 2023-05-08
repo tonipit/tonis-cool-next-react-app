@@ -43,3 +43,19 @@ body {
 
 .button-pink {
 }
+
+@layer base {
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+}
+
+@layer components {
+    .search-input {
+        @apply rounded-md;
+
+        &:hover {
+            @apply border-pink-600;
+        }
+    }
+}

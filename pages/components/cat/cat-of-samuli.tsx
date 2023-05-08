@@ -3,15 +3,20 @@ import Link from 'next/link';
 
 const CatOfSamuli = ({ cat }) => {
     return (
-        <div className="mt-4">
-            <div key={cat.id}>
-                Name: &nbsp;<b key={cat.id}>{cat.name}</b>
-                <br />
-                Breed: &nbsp;<b key={cat.breed}>{cat.breed}</b>
-                <br />
-                State: &nbsp;<b key={cat.state}>{cat.state}</b>
-                <br />
-                City: &nbsp;<b key={cat.city}>{cat.city}</b>
+        <div className="mt-4 border-pink-200 border rounded-lg p-3">
+            <div className="grid grid-cols-2 gap-2">
+                <div key={cat.id}>
+                    Name: &nbsp;<b key={cat.id}>{cat.name}</b>
+                    <br />
+                    Breed: &nbsp;<b key={cat.breed}>{cat.breed}</b>
+                    <br />
+                    State: &nbsp;<b key={cat.state}>{cat.state}</b>
+                    <br />
+                    City: &nbsp;<b key={cat.city}>{cat.city}</b>
+                </div>
+                <div>
+                    <img src={cat.images[0]} alt="cat to adopt" className="w-20 rounded-full" />
+                </div>
             </div>
             <div className="flex flex-1 border-l-blue-800">
                 <Link href={`./cat-details?id=${cat.id}`} property="cat" className="underline blue text-pink-600">

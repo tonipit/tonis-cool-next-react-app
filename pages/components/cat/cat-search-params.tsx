@@ -29,12 +29,10 @@ const SearchParams = () => {
 
     const breeds: string[] = ['', 'Chartreux', 'American Longhair', 'Domestic Shorthair', 'Tabby', 'British Shorthair'];
 
-    const [adoptedCat, _] = useContext(AdoptedCatContext);
-
     return (
         <div className="search-params">
-            {adoptedCat?.name}
             <form
+                className="border-pink-500"
                 onSubmit={(e) => {
                     e.preventDefault();
                     console.log('e', e);
@@ -56,13 +54,18 @@ const SearchParams = () => {
                     id="location"
                     name="location"
                     type="text"
-                    className="border-slate-700 text-pink-600"
+                    className=" text-pink-600 block search-input"
                     value={location}
                     onChange={(e) => setLocation(e.target.value)}
                 />
                 <br />
                 <label htmlFor="breed">Breed</label>
-                <select name="breed" id="breed" className="border-slate-700 text-pink-600" disabled={!breeds?.length}>
+                <select
+                    name="breed"
+                    id="breed"
+                    className="border-slate-700 text-pink-600 block search-input"
+                    disabled={!breeds?.length}
+                >
                     {breeds.map((breed) => (
                         <option
                             key={breed}

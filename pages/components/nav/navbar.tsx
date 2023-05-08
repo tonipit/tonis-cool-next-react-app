@@ -2,9 +2,12 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 // import Logo from './Logo';
 import NavItem from './nav-item';
+import AdoptedCatContext from '@/pages/adopted-pet-context';
+
+import styles from './navbar-styles.module.scss';
 
 const MENU_LIST = [
     // { text: 'Home', href: '/' },
@@ -15,11 +18,13 @@ const Navbar = () => {
     const [navActive, setNavActive] = useState(null);
     const [activeIdx, setActiveIdx] = useState(-1);
 
+    const [adoptedCat, _] = useContext(AdoptedCatContext);
+
     return (
-        <header className="p-5">
+        <header className={'p-5 m-0 bg-gradient-to-b from-gray-600 to-black' + styles.Navbar}>
             <nav className={`nav`}>
-                <Link href={'/'}>
-                    <h1 className="logo">Search for Samuli's cats</h1>
+                <Link href={'/'} className="">
+                    <h1 className="logo font-bold">Search for Samuli's cats</h1>
                 </Link>
                 <div onClick={() => setNavActive(!navActive)} className={`nav__menu-bar font-bold border-blue-600`}>
                     <div></div>
@@ -34,12 +39,23 @@ const Navbar = () => {
                                 setNavActive(false);
                             }}
                             key={menu.text}
+                            className="pt-3 last:pb-10"
                         >
                             <NavItem active={activeIdx === idx} {...menu} />
                         </div>
                     ))}
                 </div>
             </nav>
+            <div>
+                {adoptedCat && (
+                    <div>
+                        Adopted one:
+                        <img src={adoptedCat.images[0]} alt="adopted cat" className="w-20 rounded-full" />
+                        <br />
+                        <b>{adoptedCat.name}</b>
+                    </div>
+                )}
+            </div>
         </header>
     );
 };
