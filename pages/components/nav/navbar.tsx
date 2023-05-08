@@ -16,7 +16,7 @@ const Navbar = () => {
     const [activeIdx, setActiveIdx] = useState(-1);
 
     return (
-        <header>
+        <header className="p-5">
             <nav className={`nav`}>
                 <Link href={'/'}>
                     <h1 className="logo">Search for Samuli's cats</h1>

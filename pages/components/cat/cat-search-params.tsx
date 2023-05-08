@@ -1,80 +1,81 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import Button from '../button/common-html-elements/button';
-import useCatList from './use-cat-list';
 import CatList from './cat-results';
-import CatOfSamuli from './cat-of-samuli';
-
-let loaded: boolean = false;
+import fetchSearch from './fetch-search';
+import { useQuery } from '@tanstack/react-query';
+import AdoptedCatContext from '@/pages/adopted-pet-context';
 
 const SearchParams = () => {
-    let [location, setLocation] = useState('');
-    const [breed, setBreed] = useState('');
-    // const [cats, setCats] = useState([]);
+    const [requestParams, setRequestParams] = useState({
+        location: '',
+        animal: 'cat',
+        breed: '',
+    });
 
-    // const [cats] = useCatList(breed);
+    const results = useQuery(['search', requestParams], fetchSearch);
+    const cats = results?.data?.pets ?? [];
+    // const cities = uniq([
+    //     '',
+    //     ...cats?.map((cat: any) => {
+    //         return cat.city;
+    //     }),
+    // ]);
+
+    let [location, setLocation] = useState('');
 
     const [city, setCity] = useState('');
 
-    const [cats, cities, status] = useCatList(breed);
+    const breeds: string[] = ['', 'Chartreux', 'American Longhair', 'Domestic Shorthair', 'Tabby', 'British Shorthair'];
 
-    const breeds: string[] = ['Chartreux', 'American Longhair', 'Domestic Shorthair', 'Tabby', 'British Shorthair'];
-    // const cities: string[] = [];
-
-    useEffect(() => {
-        if (!loaded) {
-            setBreed(breeds[0]);
-            // requestPets();
-        }
-        loaded = true;
-    }, [breed]);
-
-    async function requestPets() {
-        // setCats([]);
-        // const res = await fetch(`http://pets-v2.dev-apis.com/pets?animal=cat&location=${location}&breed=${breed}`);
-        // const json = await res.json();
-        // setCats(json.pets);
-    }
+    const [adoptedCat, _] = useContext(AdoptedCatContext);
 
     return (
         <div className="search-params">
+            {adoptedCat?.name}
             <form
                 onSubmit={(e) => {
                     e.preventDefault();
+                    console.log('e', e);
+                    const formData = new FormData(e.target);
+                    const obj = {
+                        animal: formData.get('animal') || 'cat',
+                        breed: formData.get('breed') || '',
+                        location: formData.get('location') || '',
+                    };
+                    console.log('object', obj);
+                    setCity('');
+                    setRequestParams(obj);
                 }}
             >
                 <br />
-                {/* <label htmlFor="location" className="float-left" />
-                Location
+                <label htmlFor="location" className="float-left" />
+                City
                 <input
                     id="location"
+                    name="location"
                     type="text"
                     className="border-slate-700 text-pink-600"
                     value={location}
                     onChange={(e) => setLocation(e.target.value)}
                 />
-                <br /> */}
+                <br />
                 <label htmlFor="breed">Breed</label>
-                <select
-                    name="Select breed"
-                    id="breed"
-                    className="border-slate-700 text-pink-600"
-                    value={breed}
-                    onChange={(e) => {
-                        setBreed(e.target.value);
-                        setCity('');
-                        // setCities([]);
-                    }}
-                    disabled={!breeds?.length}
-                >
+                <select name="breed" id="breed" className="border-slate-700 text-pink-600" disabled={!breeds?.length}>
                     {breeds.map((breed) => (
-                        <option key={breed} className="border-slate-700 text-pink-600">
+                        <option
+                            key={breed}
+                            className="border-slate-700 text-pink-600"
+                            onSelect={(e) => {
+                                setCity('');
+                            }}
+                        >
                             {breed}
                         </option>
                     ))}
                 </select>
-                <label htmlFor="city">City</label>
+                {/* <label htmlFor="city">City</label>
                 <select
                     name="Select city"
                     id="city"
@@ -88,8 +89,10 @@ const SearchParams = () => {
                             {city}
                         </option>
                     ))}
-                </select>
-                <Button onClick={(e) => lol(e)}>Submit</Button>
+                </select> */}
+                <Button type="submit" onClick={(e) => lol(e)}>
+                    Submit
+                </Button>
             </form>
             <CatList cats={cats} city={city}></CatList>
         </div>

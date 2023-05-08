@@ -1,18 +1,24 @@
 import { useQuery } from '@tanstack/react-query';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useParams } from 'react-router-dom';
-import fetchCat from '../fetch-cat';
-import CatOfSamuli from '../cat-of-samuli';
+import Router, { useRouter } from 'next/router';
 import Button from '../../button/common-html-elements/button';
+import fetchCatDetails from './fetch-cat-details';
+import Carousel from '../../carousel/carousel';
+import ErrorBoundary from '../../error-boundaries';
+import { useContext, useState } from 'react';
+import Modal from '@/pages/modal';
+import { useNavigate } from 'react-router-dom';
+import AdoptedCatContext from '@/pages/adopted-pet-context';
 
-const CatDetails = () => {
-    // const { id } = useParams();
+const CatDetails = (props) => {
+    const [showModal, setShowModal] = useState(false);
+
+    const navigate = useNavigate;
+    const [_, setAdoptedCat] = useContext(AdoptedCatContext);
 
     const router = useRouter();
     const { id } = router.query;
 
-    const results = useQuery(['details', id], fetchCat);
+    const results = useQuery(['details', id], fetchCatDetails);
 
     if (results.isLoading) {
         return <div className="animate-spin h-1 w-1">🐱</div>;
@@ -20,14 +26,44 @@ const CatDetails = () => {
 
     const cat = results.data.pets[0];
 
+    // throw new Error('oh no');
+
     return (
         <div>
-            🐱 <b>Breed: </b>
-            {cat.breed} - <b>State: </b> {cat.state} 🐱
-            <br />
-            <Button>Adopt {cat.name}</Button>
+            <Carousel images={cat.images}></Carousel>
+            <div className="adopt-details">
+                🐱
+                <b>Breed: </b> {cat.breed} - <b>State: </b> {cat.state}
+                🐱
+                <br />
+                <Button onClick={(e) => setShowModal(true)}>Adopt {cat.name}</Button>
+            </div>
+            {showModal ? (
+                <Modal>
+                    <div>
+                        Wanna adopt {cat.name}?
+                        <Button
+                            onClick={(e) => {
+                                setAdoptedCat(cat);
+                                Router.push('/');
+                            }}
+                        >
+                            Yes
+                        </Button>
+                        <Button onClick={(e) => setShowModal(false)}>No</Button>
+                    </div>
+                </Modal>
+            ) : null}
         </div>
     );
 };
 
-export default CatDetails;
+function DetailsErrorBoundary(props: any) {
+    return (
+        <ErrorBoundary>
+            <CatDetails {...props}></CatDetails>
+        </ErrorBoundary>
+    );
+}
+
+export default DetailsErrorBoundary;

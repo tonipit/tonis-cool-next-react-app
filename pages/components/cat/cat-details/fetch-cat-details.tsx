@@ -1,7 +1,7 @@
-const fetchCat = async ({ queryKey }) => {
+const fetchCatDetails = async ({ queryKey }) => {
     const id: any = queryKey[1];
 
-    const link: string = `http://pets-v2.dev-apis.com/pets?id=${id}&animal=cat`;
+    const link: string = `http://pets-v2.dev-apis.com/pets?id=${id}`;
     const apiRes = await fetch(link);
 
     if (!apiRes.ok) {
@@ -11,4 +11,4 @@ const fetchCat = async ({ queryKey }) => {
     return apiRes.json();
 };
 
-export default fetchCat;
+export default fetchCatDetails;

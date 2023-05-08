@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode } from 'react';
+import { ReactElement, ReactNode, useContext, useState } from 'react';
 import CatOfSamuli from './components/cat/cat-of-samuli';
 import SearchParams from './components/cat/cat-search-params';
 import Navbar from './components/nav/navbar';
@@ -6,8 +6,10 @@ import { NextPage } from 'next';
 import { AppProps } from 'next/app';
 import Layout from './layout';
 
-import './globals.css';
+import './globals.scss';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import ErrorBoundary from './components/error-boundaries';
+import AdoptedCatContext from './adopted-pet-context';
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
     getLayout?: (page: ReactElement) => ReactNode;
@@ -146,13 +148,28 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     // )
 
     const getLayout = Component.getLayout ?? ((page) => page);
+
+    const adoptedCat = useState(null);
+
     // return getLayout(<Layout {...pageProps}></Layout>);
     return (
-        <QueryClientProvider client={queryClient}>
-            <Layout>
-                <Component {...pageProps}></Component>
-            </Layout>
-        </QueryClientProvider>
+        <ErrorBoundary>
+            <div id="modal"></div>
+            {/* <div>
+                {adoptedCat ? (
+                    <div>
+                        <img src={adoptedCat?.images?.[0]} alt="" />
+                    </div>
+                ) : null}
+            </div> */}
+            <QueryClientProvider client={queryClient}>
+                <AdoptedCatContext.Provider value={adoptedCat}>
+                    <Layout>
+                        <Component {...pageProps}></Component>
+                    </Layout>
+                </AdoptedCatContext.Provider>
+            </QueryClientProvider>
+        </ErrorBoundary>
     );
 
     // return React.createElement('home-root', { id: 'lol-id' }, [

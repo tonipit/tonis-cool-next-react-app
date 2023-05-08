@@ -7,10 +7,12 @@ export const metadata = {
 };
 
 export default function Layout({ children }: PropsWithChildren) {
+    // throw new Error('lol error');
+
     return (
-        <div className="border-blue-700">
+        <div className="flex max-h-screen h-screen">
             <Navbar></Navbar>
-            <main>{children}</main>
+            <main className="overflow-auto flex flex-1 p-5">{children}</main>
 
             {/* <html lang="en">
             <body>
