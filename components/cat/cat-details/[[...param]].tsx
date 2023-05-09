@@ -5,11 +5,12 @@ import fetchCatDetails from './fetch-cat-details';
 import Carousel from '../../carousel/carousel';
 import ErrorBoundary from '../../error-boundaries';
 import { useContext, useState } from 'react';
-import Modal from '@/pages/modal';
 import { useNavigate } from 'react-router-dom';
 import AdoptedCatContext from '@/pages/adopted-pet-context';
+import Modal from '@/pages/modal';
 
-const CatDetails = (props) => {
+const CatDetails = (props: any) => {
+    console.log('catdetails props ===', props);
     const [showModal, setShowModal] = useState(false);
 
     const navigate = useNavigate;
@@ -33,10 +34,13 @@ const CatDetails = (props) => {
             <Carousel images={cat.images}></Carousel>
             <div className="adopt-details">
                 🐱
-                <b>Breed: </b> {cat.breed} - <b>State: </b> {cat.state}
+                <b>Breed: </b> {cat.breed} - <b>State: </b>{' '}
+                {cat.state}
                 🐱
                 <br />
-                <Button onClick={(e) => setShowModal(true)}>Adopt {cat.name}</Button>
+                <Button onClick={(e) => setShowModal(true)}>
+                    Adopt {cat.name}
+                </Button>
             </div>
             {showModal ? (
                 <Modal>
@@ -45,12 +49,14 @@ const CatDetails = (props) => {
                         <Button
                             onClick={(e) => {
                                 setAdoptedCat(cat);
-                                Router.push('/');
+                                Router.push('/search');
                             }}
                         >
                             Yes
                         </Button>
-                        <Button onClick={(e) => setShowModal(false)}>No</Button>
+                        <Button onClick={(e) => setShowModal(false)}>
+                            No
+                        </Button>
                     </div>
                 </Modal>
             ) : null}
@@ -66,4 +72,4 @@ function DetailsErrorBoundary(props: any) {
     );
 }
 
-export default DetailsErrorBoundary;
+export default CatDetails;

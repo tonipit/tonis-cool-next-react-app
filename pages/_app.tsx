@@ -1,15 +1,12 @@
-import { ReactElement, ReactNode, useContext, useState } from 'react';
-import CatOfSamuli from './components/cat/cat-of-samuli';
-import SearchParams from './components/cat/cat-search-params';
-import Navbar from './components/nav/navbar';
+import { ReactElement, ReactNode, useState } from 'react';
 import { NextPage } from 'next';
 import { AppProps } from 'next/app';
 import Layout from './layout';
 
 import './globals.scss';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import ErrorBoundary from './components/error-boundaries';
 import AdoptedCatContext from './adopted-pet-context';
+import ErrorBoundary from '@/components/error-boundaries';
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
     getLayout?: (page: ReactElement) => ReactNode;
@@ -146,8 +143,6 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     //     </div>
     //   </main>
     // )
-
-    const getLayout = Component.getLayout ?? ((page) => page);
 
     const adoptedCat = useState(null);
 

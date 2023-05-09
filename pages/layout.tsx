@@ -1,5 +1,5 @@
+import Navbar from '@/components/nav/navbar';
 import { PropsWithChildren } from 'react';
-import Navbar from './components/nav/navbar';
 
 export const metadata = {
     title: 'Create Next App',

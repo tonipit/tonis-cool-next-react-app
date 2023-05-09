@@ -1,5 +1,5 @@
 import { createContext } from 'react';
 
-const AdoptedCatContext = createContext(null);
+const AdoptedCatContext = createContext([]);
 
 export default AdoptedCatContext;

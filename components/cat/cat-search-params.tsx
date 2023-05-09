@@ -1,11 +1,10 @@
 'use client';
 
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import Button from '../button/common-html-elements/button';
 import CatList from './cat-results';
 import fetchSearch from './fetch-search';
 import { useQuery } from '@tanstack/react-query';
-import AdoptedCatContext from '@/pages/adopted-pet-context';
 
 const SearchParams = () => {
     const [requestParams, setRequestParams] = useState({
@@ -27,7 +26,14 @@ const SearchParams = () => {
 
     const [city, setCity] = useState('');
 
-    const breeds: string[] = ['', 'Chartreux', 'American Longhair', 'Domestic Shorthair', 'Tabby', 'British Shorthair'];
+    const breeds: string[] = [
+        '',
+        'Chartreux',
+        'American Longhair',
+        'Domestic Shorthair',
+        'Tabby',
+        'British Shorthair',
+    ];
 
     return (
         <div className="search-params">
@@ -93,17 +99,11 @@ const SearchParams = () => {
                         </option>
                     ))}
                 </select> */}
-                <Button type="submit" onClick={(e) => lol(e)}>
-                    Submit
-                </Button>
+                <Button type="submit">Submit</Button>
             </form>
             <CatList cats={cats} city={city}></CatList>
         </div>
     );
-};
-
-const lol = (e: any) => {
-    console.log('lol', e);
 };
 
 export default SearchParams;

@@ -1,7 +1,4 @@
 import { ReactElement } from 'react';
-import CatOfSamuli from './components/cat/cat-of-samuli';
-import SearchParams from './components/cat/cat-search-params';
-import Navbar from './components/nav/navbar';
 import Layout from './layout';
 import { NextPageWithLayout } from './_app';
 

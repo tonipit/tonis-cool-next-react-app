@@ -1,7 +1,8 @@
 import { Component } from 'react';
 import styles from './styles.module.scss';
+import Image from 'next/image';
 
-class Carousel extends Component {
+class Carousel extends Component<any, any> {
     state: any = {
         active: 0,
     };
@@ -11,7 +12,7 @@ class Carousel extends Component {
     };
 
     handleIndexClick(photo: any, index: string | number) {
-        this.state = index;
+        // this.state = index;
         this.setState({
             active: +index,
         });
@@ -25,10 +26,15 @@ class Carousel extends Component {
 
         return (
             <div className="carousel">
-                <img src={images[active]} alt="cat hero" className="max-w-[33%] float-left m-5" />
+                <img
+                    src={images[active]}
+                    alt="cat hero"
+                    className="max-w-[33%] float-left m-5"
+                />
                 <div
                     className={
-                        'carousel-smaller grid grid-cols-5 rounded w-2/6 gap-5 p-[20px] ' + styles.CarouselSmaller
+                        'carousel-smaller grid grid-cols-5 rounded w-2/6 gap-5 p-[20px] ' +
+                        styles.CarouselSmaller
                     }
                 >
                     {images.map((photo: any, index: number) => (
@@ -36,8 +42,12 @@ class Carousel extends Component {
                             key={photo}
                             src={photo}
                             alt="animal-thumbnail"
-                            className={index === active ? 'active' : ''}
-                            onClick={(e) => this.handleIndexClick(photo, index)}
+                            className={
+                                index === active ? 'active' : ''
+                            }
+                            onClick={(e) =>
+                                this.handleIndexClick(photo, index)
+                            }
                         />
                     ))}
                 </div>

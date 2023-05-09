@@ -35,13 +35,4 @@ Button.defaultProps = {
     theme: 'pink',
 };
 
-const ButtonToggle = styled(Button)`
-    opacity: 0.7;
-    ${({ active }) =>
-        active &&
-        `
-    opacity: 1; 
-  `}
-`;
-
 export default Button;
