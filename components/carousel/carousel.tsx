@@ -1,6 +1,11 @@
 import { Component } from 'react';
 import styles from './styles.module.scss';
 import Image from 'next/image';
+import { Pet } from '../cat/cat-types';
+
+interface IProps {
+    images: Pet['images'];
+}
 
 class Carousel extends Component<any, any> {
     state: any = {
@@ -10,13 +15,6 @@ class Carousel extends Component<any, any> {
     static defaultProps: any = {
         images: 'http://pets-images.dev-apis.com/pets/none.jpg',
     };
-
-    handleIndexClick(photo: any, index: string | number) {
-        // this.state = index;
-        this.setState({
-            active: +index,
-        });
-    }
 
     render() {
         // throw new Error('lol error');
@@ -46,7 +44,9 @@ class Carousel extends Component<any, any> {
                                 index === active ? 'active' : ''
                             }
                             onClick={(e) =>
-                                this.handleIndexClick(photo, index)
+                                this.setState({
+                                    active: +index,
+                                })
                             }
                         />
                     ))}

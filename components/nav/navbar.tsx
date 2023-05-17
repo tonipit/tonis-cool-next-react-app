@@ -1,13 +1,15 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 // import Logo from './Logo';
 import NavItem from './nav-item';
 
 import styles from './navbar-styles.module.scss';
-import AdoptedCatContext from '@/pages/adopted-pet-context';
+import { useSelector } from 'react-redux';
+import Button from '../button/common-html-elements/button';
+import { unAdopt } from '@/features/adoptedPet/adoptedPetSlice';
+import { useDispatch } from 'react-redux';
 
 const MENU_LIST = [
     // { text: 'Home', href: '/' },
@@ -18,7 +20,11 @@ const Navbar = () => {
     const [navActive, setNavActive] = useState(false);
     const [activeIdx, setActiveIdx] = useState(-1);
 
-    const [adoptedCat, _] = useContext(AdoptedCatContext);
+    const adoptedCat = useSelector(
+        (state) => state.adoptedPetSlice.adoptedCat
+    );
+
+    const dispatch = useDispatch();
 
     return (
         <header
@@ -74,6 +80,13 @@ const Navbar = () => {
                         />
                         <br />
                         <b>{adoptedCat.name}</b>
+                        <Button
+                            onClick={(e) => {
+                                dispatch(unAdopt());
+                            }}
+                        >
+                            x
+                        </Button>
                     </div>
                 )}
             </div>

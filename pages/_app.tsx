@@ -5,8 +5,10 @@ import Layout from './layout';
 
 import './globals.scss';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import AdoptedCatContext from './adopted-pet-context';
 import ErrorBoundary from '@/components/error-boundaries';
+import { Pet } from '@/components/cat/cat-types';
+import { Provider } from 'react-redux';
+import { store } from '../store/index';
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
     getLayout?: (page: ReactElement) => ReactNode;
@@ -144,7 +146,7 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     //   </main>
     // )
 
-    const adoptedCat = useState(null);
+    const adoptedCat = useState(null as Pet | null);
 
     // return getLayout(<Layout {...pageProps}></Layout>);
     return (
@@ -157,13 +159,13 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
                     </div>
                 ) : null}
             </div> */}
-            <QueryClientProvider client={queryClient}>
-                <AdoptedCatContext.Provider value={adoptedCat}>
+            <Provider store={store}>
+                <QueryClientProvider client={queryClient}>
                     <Layout>
                         <Component {...pageProps}></Component>
                     </Layout>
-                </AdoptedCatContext.Provider>
-            </QueryClientProvider>
+                </QueryClientProvider>
+            </Provider>
         </ErrorBoundary>
     );
 

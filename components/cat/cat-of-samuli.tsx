@@ -1,7 +1,8 @@
 import React from 'react';
 import Link from 'next/link';
+import { Pet } from './cat-types';
 
-const CatOfSamuli = ({ cat }) => {
+const CatOfSamuli = ({ cat }: { cat: Pet }) => {
     return (
         <div className="mt-4 border-pink-200 border rounded-lg p-3">
             <div className="grid grid-cols-2 gap-2">
@@ -15,11 +16,19 @@ const CatOfSamuli = ({ cat }) => {
                     City: &nbsp;<b key={cat.city}>{cat.city}</b>
                 </div>
                 <div>
-                    <img src={cat.images[0]} alt="cat to adopt" className="w-20 rounded-full" />
+                    <img
+                        src={cat.images![0]}
+                        alt="cat to adopt"
+                        className="w-20 rounded-full"
+                    />
                 </div>
             </div>
             <div className="flex flex-1 border-l-blue-800">
-                <Link href={`./cat-details?id=${cat.id}`} property="cat" className="underline blue text-pink-600">
+                <Link
+                    href={`./cat-details?id=${cat.id}`}
+                    property="cat"
+                    className="underline blue text-pink-600"
+                >
                     <div className="">Show details</div>
                 </Link>
             </div>
