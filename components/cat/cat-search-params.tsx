@@ -45,7 +45,7 @@ const SearchParams = () => {
     //     }),
     // ]);
 
-    let [location, setLocation] = useState('');
+    let [location, setLocation] = useState(requestParams.location);
 
     const [city, setCity] = useState('');
 
@@ -80,7 +80,7 @@ const SearchParams = () => {
                         animal:
                             (formData
                                 .get('animal')
-                                ?.toString() as Animal) || 'cat',
+                                ?.toString() as Animal) || '', // || 'cat'
                         breed:
                             formData.get('breed')?.toString() || '',
                         location:

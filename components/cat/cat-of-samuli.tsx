@@ -2,6 +2,8 @@ import React from 'react';
 import Link from 'next/link';
 import { Pet } from './cat-types';
 
+const noneJpg: string = 'none.jpg';
+
 const CatOfSamuli = ({ cat }: { cat: Pet }) => {
     return (
         <div className="mt-4 border-pink-200 border rounded-lg p-3">
@@ -17,7 +19,8 @@ const CatOfSamuli = ({ cat }: { cat: Pet }) => {
                 </div>
                 <div>
                     <img
-                        src={cat.images![0]}
+                        data-testid="thumbnail"
+                        src={(cat.images && cat.images[0]) || noneJpg}
                         alt="cat to adopt"
                         className="w-20 rounded-full"
                     />

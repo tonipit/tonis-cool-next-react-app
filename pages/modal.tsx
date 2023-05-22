@@ -2,16 +2,17 @@ import { MutableRefObject, ReactElement, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 
 const Modal = ({ children }: { children: ReactElement }) => {
-    if (!document) {
+    if (typeof window === undefined || !document) {
         return;
     }
+
     const elRef: MutableRefObject<HTMLDivElement | null> = useRef(null);
     if (!elRef.current) {
-        elRef.current = document.createElement('div');
+        elRef.current = document?.createElement('div');
     }
 
     useEffect(() => {
-        const modalRoot = document.getElementById('modal');
+        const modalRoot = document?.getElementById('modal');
         if (!modalRoot || !elRef?.current) {
             return;
         }

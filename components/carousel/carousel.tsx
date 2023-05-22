@@ -1,6 +1,7 @@
+import React from 'react';
+
 import { Component } from 'react';
 import styles from './styles.module.scss';
-import Image from 'next/image';
 import { Pet } from '../cat/cat-types';
 
 interface IProps {
@@ -25,6 +26,7 @@ class Carousel extends Component<any, any> {
         return (
             <div className="carousel">
                 <img
+                    data-testid="hero"
                     src={images[active]}
                     alt="cat hero"
                     className="max-w-[33%] float-left m-5"
@@ -37,6 +39,7 @@ class Carousel extends Component<any, any> {
                 >
                     {images.map((photo: any, index: number) => (
                         <img
+                            data-testid={'carousel-img-' + index}
                             key={photo}
                             src={photo}
                             alt="animal-thumbnail"
